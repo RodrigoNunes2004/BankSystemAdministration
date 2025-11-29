@@ -34,7 +34,7 @@
             AmountNum = new NumericUpDown();
             BankAccountsGrid = new DataGridView();
             DepositBtn = new Button();
-            WithrawBtn = new Button();
+            WithdrawBtn = new Button();
             CreateAccountBtn = new Button();
             ((System.ComponentModel.ISupportInitialize)AmountNum).BeginInit();
             ((System.ComponentModel.ISupportInitialize)BankAccountsGrid).BeginInit();
@@ -72,6 +72,8 @@
             // 
             AmountNum.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             AmountNum.Location = new Point(188, 364);
+            AmountNum.Maximum = new decimal(new int[] { 99999999, 0, 0, 0 });
+            AmountNum.Minimum = new decimal(new int[] { 999999999, 0, 0, int.MinValue });
             AmountNum.Name = "AmountNum";
             AmountNum.Size = new Size(275, 35);
             AmountNum.TabIndex = 3;
@@ -96,18 +98,20 @@
             DepositBtn.TabIndex = 5;
             DepositBtn.Text = "Deposit";
             DepositBtn.UseVisualStyleBackColor = false;
+            DepositBtn.Click += DepositBtn_Click;
             // 
-            // WithrawBtn
+            // WithdrawBtn
             // 
-            WithrawBtn.BackColor = SystemColors.ControlDarkDark;
-            WithrawBtn.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            WithrawBtn.ForeColor = SystemColors.ButtonHighlight;
-            WithrawBtn.Location = new Point(753, 387);
-            WithrawBtn.Name = "WithrawBtn";
-            WithrawBtn.Size = new Size(242, 63);
-            WithrawBtn.TabIndex = 6;
-            WithrawBtn.Text = "Withraw";
-            WithrawBtn.UseVisualStyleBackColor = false;
+            WithdrawBtn.BackColor = SystemColors.WindowFrame;
+            WithdrawBtn.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            WithdrawBtn.ForeColor = SystemColors.ButtonHighlight;
+            WithdrawBtn.Location = new Point(753, 387);
+            WithdrawBtn.Name = "WithdrawBtn";
+            WithdrawBtn.Size = new Size(242, 63);
+            WithdrawBtn.TabIndex = 6;
+            WithdrawBtn.Text = "Withdraw";
+            WithdrawBtn.UseVisualStyleBackColor = false;
+            WithdrawBtn.Click += WithdrawBtn_Click;
             // 
             // CreateAccountBtn
             // 
@@ -118,7 +122,8 @@
             CreateAccountBtn.Size = new Size(284, 63);
             CreateAccountBtn.TabIndex = 7;
             CreateAccountBtn.Text = "Create Account";
-            CreateAccountBtn.UseVisualStyleBackColor = false;
+            CreateAccountBtn.UseVisualStyleBackColor = true;
+            CreateAccountBtn.Click += CreateAccountBtn_Click;
             // 
             // Form1
             // 
@@ -126,7 +131,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1059, 497);
             Controls.Add(CreateAccountBtn);
-            Controls.Add(WithrawBtn);
+            Controls.Add(WithdrawBtn);
             Controls.Add(DepositBtn);
             Controls.Add(BankAccountsGrid);
             Controls.Add(AmountNum);
@@ -150,7 +155,7 @@
         private NumericUpDown AmountNum;
         private DataGridView BankAccountsGrid;
         private Button DepositBtn;
-        private Button WithrawBtn;
+        private Button WithdrawBtn;
         private Button CreateAccountBtn;
     }
 }
