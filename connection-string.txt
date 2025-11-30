@@ -1,0 +1,3 @@
+USE THIS CONNECTION STRING FOR BankingSystemDb (where the table was created):
+Server=tcp:banking-system-nz-server.database.windows.net,1433;Initial Catalog=BankingSystemDb;Persist Security Info=False;User ID=bankingadmin;Password=Desurf1979$$;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
+
