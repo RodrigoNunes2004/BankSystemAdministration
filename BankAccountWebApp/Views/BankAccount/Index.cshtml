@@ -1,0 +1,140 @@
+@model List<BankAccountWebApp.Models.BankAccount>
+
+@{
+    ViewData["Title"] = "Bank Account System Management";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4">Bank Account System Management</h1>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5>Create Account</h5>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Create" method="post">
+                        <div class="mb-3">
+                            <label for="owner" class="form-label">Owner:</label>
+                            <input type="text" class="form-control" id="owner" name="owner" required />
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Create Account</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h5>Transaction</h5>
+                </div>
+                <div class="card-body">
+                    <div id="selectedAccountInfo" class="alert alert-info" style="display: none;">
+                        <strong>Selected Account:</strong> <span id="selectedAccountName"></span>
+                    </div>
+                    <form id="transactionForm" method="post">
+                        <input type="hidden" id="accountNumber" name="accountNumber" required />
+                        <div class="mb-3">
+                            <label for="amount" class="form-label">Amount:</label>
+                            <input type="number" class="form-control" id="amount" name="amount" step="0.01" min="0.01" required />
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" formaction="@Url.Action("Deposit", "BankAccount")" class="btn btn-success">Deposit</button>
+                            <button type="submit" formaction="@Url.Action("Withdraw", "BankAccount")" class="btn btn-dark">Withdraw</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Bank Accounts</h5>
+                </div>
+                <div class="card-body">
+                    @if (Model != null && Model.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Account Number</th>
+                                        <th>Owner</th>
+                                        <th>Balance</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var account in Model)
+                                    {
+                                        <tr>
+                                            <td>@account.AccountNumber.ToString().Substring(0, 8)...</td>
+                                            <td>@account.Owner</td>
+                                            <td>$@account.Balance.ToString("N2")</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-primary" onclick="selectAccount('@account.AccountNumber', '@account.Owner')">
+                                                    Select
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted">No accounts found. Create your first account above.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function selectAccount(accountNumber, ownerName) {
+            document.getElementById('accountNumber').value = accountNumber;
+            document.getElementById('selectedAccountName').textContent = ownerName;
+            document.getElementById('selectedAccountInfo').style.display = 'block';
+            document.getElementById('transactionForm').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // Validate form before submit
+        document.getElementById('transactionForm').addEventListener('submit', function(e) {
+            var accountNumber = document.getElementById('accountNumber').value;
+            var amount = document.getElementById('amount').value;
+            
+            if (!accountNumber) {
+                e.preventDefault();
+                alert('Please select an account first!');
+                return false;
+            }
+            
+            if (!amount || parseFloat(amount) <= 0) {
+                e.preventDefault();
+                alert('Please enter a valid amount!');
+                return false;
+            }
+        });
+    </script>
+}
+
