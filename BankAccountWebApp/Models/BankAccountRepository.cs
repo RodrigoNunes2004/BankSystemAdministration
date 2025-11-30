@@ -98,6 +98,26 @@ namespace BankAccountWebApp.Models
                 command.ExecuteNonQuery();
             }
         }
+
+        public void DeleteAccount(Guid accountNumber)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                var command = new SqlCommand(
+                    "DELETE FROM BankAccounts WHERE AccountNumber = @AccountNumber",
+                    connection);
+
+                command.Parameters.AddWithValue("@AccountNumber", accountNumber);
+
+                int rowsAffected = command.ExecuteNonQuery();
+
+                if (rowsAffected == 0)
+                {
+                    throw new InvalidOperationException("Account not found or already deleted.");
+                }
+            }
+        }
     }
 }
 

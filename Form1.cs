@@ -96,5 +96,32 @@ namespace BankAccountApp
                 }
             }
         }
+
+        private void DeleteAccountBtn_Click(object sender, EventArgs e)
+        {
+            if (BankAccountsGrid.CurrentRow != null || BankAccountsGrid.SelectedRows.Count == 1)
+            {
+                var row = BankAccountsGrid.CurrentRow ?? BankAccountsGrid.SelectedRows[0];
+                if (row.DataBoundItem is not BankAccount selectedBankAccount)
+                    return;
+                try
+                {
+                    if (selectedBankAccount.CanDelete(out string reason))
+                    {
+                        repository.DeleteAccount(selectedBankAccount.AccountNumber);
+                        RefreshGrid();
+                        MessageBox.Show("Account deleted successfully.");
+                    }
+                    else
+                    {
+                        MessageBox.Show(reason, "Cannot Delete Account", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error deleting account: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
     }
 }

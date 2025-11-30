@@ -132,6 +132,43 @@ namespace BankAccountWebApp.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        public IActionResult Delete(string accountNumber)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(accountNumber) || !Guid.TryParse(accountNumber, out Guid accountGuid))
+                {
+                    TempData["Error"] = "Invalid account number.";
+                    return RedirectToAction("Index");
+                }
+
+                var account = _repository.GetAccount(accountGuid);
+                
+                if (account == null)
+                {
+                    TempData["Error"] = "Account not found.";
+                    return RedirectToAction("Index");
+                }
+
+                if (account.CanDelete(out string reason))
+                {
+                    _repository.DeleteAccount(accountGuid);
+                    TempData["Success"] = "Account deleted successfully.";
+                }
+                else
+                {
+                    TempData["Error"] = reason;
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = $"Error deleting account: {ex.Message}";
+            }
+
+            return RedirectToAction("Index");
+        }
     }
 }
 

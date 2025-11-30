@@ -48,3 +48,4 @@ Write-Host "1. Wait 2-3 minutes for the app to start"
 Write-Host "2. Visit the URL above"
 Write-Host "3. Make sure your SQL Server firewall allows Azure services"
 
+

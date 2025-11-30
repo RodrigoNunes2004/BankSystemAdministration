@@ -1,4 +1,5 @@
-﻿namespace BankAccountApp
+﻿
+namespace BankAccountApp
 {
     partial class Form1
     {
@@ -36,6 +37,7 @@
             DepositBtn = new Button();
             WithdrawBtn = new Button();
             CreateAccountBtn = new Button();
+            DeleteAccountBtn = new Button();
             ((System.ComponentModel.ISupportInitialize)AmountNum).BeginInit();
             ((System.ComponentModel.ISupportInitialize)BankAccountsGrid).BeginInit();
             SuspendLayout();
@@ -125,11 +127,25 @@
             CreateAccountBtn.UseVisualStyleBackColor = true;
             CreateAccountBtn.Click += CreateAccountBtn_Click;
             // 
+            // DeleteAccountBtn
+            // 
+            DeleteAccountBtn.BackColor = Color.Red;
+            DeleteAccountBtn.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            DeleteAccountBtn.ForeColor = Color.White;
+            DeleteAccountBtn.Location = new Point(179, 209);
+            DeleteAccountBtn.Name = "DeleteAccountBtn";
+            DeleteAccountBtn.Size = new Size(284, 63);
+            DeleteAccountBtn.TabIndex = 8;
+            DeleteAccountBtn.Text = "Delete Account";
+            DeleteAccountBtn.UseVisualStyleBackColor = false;
+            DeleteAccountBtn.Click += DeleteAccountBtn_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1059, 497);
+            Controls.Add(DeleteAccountBtn);
             Controls.Add(CreateAccountBtn);
             Controls.Add(WithdrawBtn);
             Controls.Add(DepositBtn);
@@ -157,5 +173,6 @@
         private Button DepositBtn;
         private Button WithdrawBtn;
         private Button CreateAccountBtn;
+        private Button DeleteAccountBtn;
     }
 }

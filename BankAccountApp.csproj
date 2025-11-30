@@ -12,4 +12,29 @@
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
   </ItemGroup>
 
+  <!-- Exclude the BankAccountWebApp subfolder (ASP.NET project files) from the WinForms project
+       SDK-style projects include all files under the project directory by default. Removing these
+       prevents Razor/ASP.NET generated files from being compiled into the WinForms app. -->
+  <ItemGroup>
+    <Compile Remove="BankAccountWebApp\**\*.cs" />
+    <EmbeddedResource Remove="BankAccountWebApp\**\*.resx" />
+    <None Remove="BankAccountWebApp\**\*.cshtml" />
+    <Content Remove="BankAccountWebApp\**\*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>

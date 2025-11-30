@@ -92,6 +92,12 @@
                                                 <button class="btn btn-sm btn-outline-primary" onclick="selectAccount('@account.AccountNumber', '@account.Owner')">
                                                     Select
                                                 </button>
+                                                <form asp-action="Delete" method="post" style="display: inline;" onsubmit="return confirmDelete('@account.Owner', @account.Balance);">
+                                                    <input type="hidden" name="accountNumber" value="@account.AccountNumber" />
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger ms-2">
+                                                        Delete
+                                                    </button>
+                                                </form>
                                             </td>
                                         </tr>
                                     }
@@ -135,6 +141,14 @@
                 return false;
             }
         });
+
+        function confirmDelete(ownerName, balance) {
+            if (balance !== 0) {
+                alert('Account balance must be zero to delete the account. Current balance: $' + balance.toFixed(2));
+                return false;
+            }
+            return confirm('Are you sure you want to delete the account for ' + ownerName + '?');
+        }
     </script>
 }
 

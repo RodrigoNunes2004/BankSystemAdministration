@@ -41,5 +41,25 @@ namespace BankAccountApp
             Balance -= amount;
             return "Withdrawal completed successfully.";
         }
+                    
+        // Validation helper used by the UI before calling repository.DeleteAccount
+        public bool CanDelete(out string reason)
+        {
+            if (Balance != 0m)
+            {
+                reason = "Account balance must be zero to delete the account.";
+                return false;
+            }
+            reason = string.Empty;
+            return true;
+        }
+
+        public string DeleteAccount()
+        {   
+            if (Balance != 0)
+                return "Account balance must be zero to delete the account.";
+            return "Account deleted successfully.";
+
+        }
     }
 }
